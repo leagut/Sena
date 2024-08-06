@@ -14,7 +14,7 @@ public class Categoria {
     private Integer idCategoria;
     private String descripcion;
     private Boolean estado;
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria" , cascade = CascadeType.REMOVE )
     private List<Producto> productos;
 
 
