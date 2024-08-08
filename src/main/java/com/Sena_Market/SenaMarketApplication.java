@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+//@SpringBootApplication(scanBasePackages = {"com.Sena_Market.persistence.mapper"})
 @SpringBootApplication()
 public class SenaMarketApplication {
 
