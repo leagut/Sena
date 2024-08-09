@@ -26,6 +26,10 @@ public class CategoryService {
         return categoryRepository.save(categoria);
     }
 
+    public Optional<Category> delete(int categoryId) {
+        return  categoryRepository.delete((categoryId));
+    }
+
 
 
 }

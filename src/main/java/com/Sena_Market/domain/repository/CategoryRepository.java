@@ -10,5 +10,8 @@ public interface CategoryRepository {
     List<Category>getAll();
     Optional<Category>getById(int clientId);
     Category save(Category category);
-    void delete(int categoryId);
+    Optional<Category> delete(int categoryId);
+
+
+
 }

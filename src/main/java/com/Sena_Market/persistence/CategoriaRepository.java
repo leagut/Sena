@@ -37,7 +37,12 @@ public class CategoriaRepository implements CategoryRepository {
     }
 
     @Override
-    public void delete(int categoryId) {
-        //pendiente para efectuar borrado logico
+    public Optional<Category> delete(int categoryId) {
+        return categoryCrudRepository.findById(categoryId).map(categoria -> {
+            categoria.setEstado(false);
+            return Optional.of(save(mapper.toCategory(categoria)));
+        }).orElse(Optional.empty());
     }
+
+
 }

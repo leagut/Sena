@@ -36,6 +36,12 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") int categoryId) {
+        return categoryService.delete(categoryId)
+                .map(deletedCategory -> new ResponseEntity<>(deletedCategory, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 
 
