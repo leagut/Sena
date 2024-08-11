@@ -13,7 +13,7 @@ public class Usuario {
     private Integer id;
     @Column
     private String nombre;
-    @Column
+    @Column(unique = true)
     private String correo;
     @Column
     private String telefono;

@@ -1,8 +1,10 @@
 package com.Sena_Market.persistence;
 
+import com.Sena_Market.domain.User;
 import com.Sena_Market.domain.repository.UserRepository;
 import com.Sena_Market.persistence.crud.UserCrudRepository;
 import com.Sena_Market.persistence.entity.Usuario;
+import com.Sena_Market.persistence.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class UsuarioRepository implements UserRepository {
     @Autowired
     private UserCrudRepository userCrudRepository;
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public List<Usuario> getAll() {
 
@@ -42,4 +47,13 @@ public class UsuarioRepository implements UserRepository {
         }
         return false; // Si no se encontró el usuario, devuelve false
     }
+
+    @Override
+    public Optional<User> getUser(String correo, String contrasena) {
+        return userCrudRepository
+                .findByCorreoAndContrasena(correo, contrasena)
+                .map(userMapper::toUser); // Usamos la referencia directa al método
+    }
+
+
 }
