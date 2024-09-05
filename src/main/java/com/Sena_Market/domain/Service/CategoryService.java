@@ -25,7 +25,6 @@ public class CategoryService {
     public Category save(Category categoria){
         return categoryRepository.save(categoria);
     }
-
     public Optional<Category> delete(int categoryId) {
         return  categoryRepository.delete((categoryId));
     }
