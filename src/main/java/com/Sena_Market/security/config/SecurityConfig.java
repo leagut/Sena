@@ -35,7 +35,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
-                    http.requestMatchers(HttpMethod.POST, "/category/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
