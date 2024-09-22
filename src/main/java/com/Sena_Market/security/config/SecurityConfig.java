@@ -35,10 +35,19 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
+                    // EndPoints publicos
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 
+                    // EndPoints Privados
+                    http.requestMatchers(HttpMethod.POST, "/persona/**").hasAuthority("CREATE");
+                    http.requestMatchers(HttpMethod.GET, "/method/get").hasAuthority("READ");
+                    http.requestMatchers(HttpMethod.POST, "/method/post").hasAuthority("CREATE");
+                    http.requestMatchers(HttpMethod.DELETE, "/method/delete").hasAuthority("DELETE");
+                    http.requestMatchers(HttpMethod.PUT, "/method/put").hasAuthority("UPDATE");
+
+                    http.anyRequest().denyAll();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
