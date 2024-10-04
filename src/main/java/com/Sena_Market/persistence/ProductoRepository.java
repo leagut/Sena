@@ -26,6 +26,13 @@ public class ProductoRepository implements ProductRepository {
         return mapper.toProducts(productos);
 
     }
+
+    @Override
+    public List<Product> getAllFilter() {
+        List<Producto>productos=(List<Producto>) productoCrudRepository.findByEstadoTrueAndCategoriaEstadoTrue();
+        return  mapper.toProducts(productos) ;
+    }
+
     @Override
     public Optional<List<Product>> getByCategory(int categoryId){
         List<Producto>productos =  productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);

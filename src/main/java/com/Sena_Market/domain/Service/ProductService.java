@@ -18,6 +18,8 @@ public class ProductService {
         return productRepository.getAll();
     }
 
+    public List<Product> getAllFilter(){return productRepository.getAllFilter();}
+
     public Optional<Product> getProduct(int productId) {
         return productRepository.getProduct(productId);
     }
