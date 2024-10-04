@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -53,8 +54,21 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        Optional<UserEntity> optionalUser = userRepository.findUserEntityByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            throw new UsernameNotFoundException("User not found in the database"); // Puedes personalizar este mensaje de error
+        }
+
+        // Si el usuario existe, obtenemos el campo cargo
+        UserEntity userEntity = optionalUser.get();
+        String cargo = userEntity.getCargo();
+
+        // Creamos el token de autenticación
         String accessToken = jwtUtils.createToken(authentication);
-        AuthResponse authResponse = new AuthResponse(username, "User loged succesfully", accessToken, true);
+
+        // Retornamos la respuesta con el cargo incluido
+        AuthResponse authResponse = new AuthResponse(username, "User loged succesfully", accessToken, true, cargo);
         return authResponse;
     }
 

@@ -21,6 +21,7 @@ public class UserEntity {
     @Column(unique = true)
     private String username;
     private String password;
+    private String cargo;
 
     @Column(name = "is_enabled")
     private boolean isEnabled;
