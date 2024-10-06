@@ -36,6 +36,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
                     // EndPoints publicos
+                    http.requestMatchers(HttpMethod.PUT, "/products/edit/**").permitAll();
+
+                    http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/products/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
@@ -46,6 +49,8 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/method/post").hasAuthority("CREATE");
                     http.requestMatchers(HttpMethod.DELETE, "/method/delete").hasAuthority("DELETE");
                     http.requestMatchers(HttpMethod.PUT, "/method/put").hasAuthority("UPDATE");
+
+                    //http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
 
                     http.anyRequest().denyAll();
                 })

@@ -41,4 +41,11 @@ public class ProductService {
         }
     }
 
+    public Product update( int id , Product priduct  ){
+        return productRepository.update( id , priduct);
+    }
+
+
+
+
 }

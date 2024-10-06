@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -56,6 +57,18 @@ public class ProductController {
         }
     }
 
-
+    @PutMapping("/edit/{id}")
+    public ResponseEntity update(@PathVariable("id") int id, @RequestBody Product product){
+        try {
+            Product updatedProduct = productService.update(id, product);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            // Si no se encuentra el producto, devolvemos un error 404
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            // Cualquier otro error, devolvemos un error genérico 500
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

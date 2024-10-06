@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -60,6 +61,20 @@ public class ProductoRepository implements ProductRepository {
     @Override
     public void delete(int idProducto){
         productoCrudRepository.deleteById(idProducto);
+    }
+
+    @Override
+    public Product update(int productId, Product updatedProduct) {
+        return productoCrudRepository.findById(productId).map(product -> {
+            product.setNombre(updatedProduct.getName());
+            product.setPrecioVenta(updatedProduct.getPrice());
+            product.setCantidadStock(updatedProduct.getStock());
+
+            Producto savedProducto = productoCrudRepository.save(product);
+
+            return mapper.toProduct(savedProducto);
+
+        }).orElseThrow(() -> new NoSuchElementException("Producto no encontrado con id: " + productId));
     }
 
 
