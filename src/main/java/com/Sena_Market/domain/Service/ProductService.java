@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,14 @@ public class ProductService {
         return productRepository.update( id , priduct);
     }
 
-
+    public Product updateActive(int id, boolean active) {
+        return productRepository.getProduct(id)
+                .map(product -> {
+                    product.setActive(active);  // Actualizamos solo el campo 'active'
+                    return productRepository.save(product);  // Guardamos el producto actualizado
+                })
+                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con id: " + id));
+    }
 
 
 }

@@ -90,4 +90,8 @@ public class Producto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    public void setIdProducto(int idProducto) {  // Asegúrate de tener este setter
+        this.idProducto = idProducto;
+    }
 }

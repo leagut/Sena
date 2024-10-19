@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -70,5 +71,24 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PutMapping("/edit/active/{id}")
+    public ResponseEntity<Product> updateActive(@PathVariable("id") int id, @RequestBody Map<String, Object> updates) {
+        if (updates.containsKey("active")) {
+            boolean active = (Boolean) updates.get("active");
+            try {
+                Product updatedProduct = productService.updateActive(id, active);
+                return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+            } catch (NoSuchElementException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // Si no se pasa el campo 'active', devolvemos un error 400
+        }
+    }
+
 
 }

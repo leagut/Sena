@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http -> {
                     // EndPoints publicos
                     http.requestMatchers(HttpMethod.PUT, "/products/edit/**").permitAll();
+                    http.requestMatchers(HttpMethod.PUT, "/products/edit/active/**").permitAll();
 
                     http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
