@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductController {
 
     @Autowired
@@ -74,21 +74,23 @@ public class ProductController {
 
 
     @PutMapping("/edit/active/{id}")
-    public ResponseEntity<Product> updateActive(@PathVariable("id") int id, @RequestBody Map<String, Object> updates) {
-        if (updates.containsKey("active")) {
-            boolean active = (Boolean) updates.get("active");
-            try {
-                Product updatedProduct = productService.updateActive(id, active);
-                return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-            } catch (NoSuchElementException e) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // Si no se pasa el campo 'active', devolvemos un error 400
+    public ResponseEntity<Product> updateActive(@PathVariable("id") int id, @RequestBody Product product) {
+        try {
+            // Solo actualizamos el campo 'active', ignorando otros posibles cambios
+            Product existingProduct = productService.getProduct(id)
+                    .orElseThrow(() -> new NoSuchElementException("Product not found"));
+
+            existingProduct.setActive(product.isActive());  // Solo cambiamos el estado 'active'
+            productService.save(existingProduct);  // Guardamos el producto actualizado
+
+            return new ResponseEntity<>(existingProduct, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 }
