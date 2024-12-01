@@ -13,4 +13,6 @@ public class SenaMarketApplication {
 		SpringApplication.run(SenaMarketApplication.class, args);
 	}
 
+
+
 }
