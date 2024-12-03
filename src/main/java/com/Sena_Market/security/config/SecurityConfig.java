@@ -40,7 +40,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.PUT, "/products/edit/active/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/products/save/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/products/save").permitAll();
-                    http.requestMatchers(HttpMethod.POST, "/api/pedidos/enviarCorreo").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/pedidos/enviarCorreo").permitAll();
 
                     http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
