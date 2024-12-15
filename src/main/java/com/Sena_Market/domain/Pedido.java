@@ -1,7 +1,6 @@
-package com.Sena_Market.persistence.entity;
+package com.Sena_Market.domain;
 
 
-import com.Sena_Market.domain.Preventa;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,11 +15,12 @@ public class Pedido {
     private String numeroFactura;
     private String direccion;
     private String telefono;
+    private double total;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Preventa> preventas = new ArrayList<>();
 
-    private double total;
+
 
     public Long getId() {
         return id;

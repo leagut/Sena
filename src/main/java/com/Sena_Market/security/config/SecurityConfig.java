@@ -41,6 +41,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/products/save/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/products/save").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/pedidos/enviarCorreo").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/recupero/factura/**").permitAll();
 
                     http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
@@ -53,10 +54,11 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/method/post").hasAuthority("CREATE");
                     http.requestMatchers(HttpMethod.DELETE, "/method/delete").hasAuthority("DELETE");
                     http.requestMatchers(HttpMethod.PUT, "/method/put").hasAuthority("UPDATE");
-
+                    http.requestMatchers(HttpMethod.GET, "/error").permitAll();
                     //http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
 
-                    http.anyRequest().denyAll();
+                     http.anyRequest().denyAll();
+                    //http.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();

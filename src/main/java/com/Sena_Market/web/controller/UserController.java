@@ -14,7 +14,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {    @Autowired
+public class UserController {
+    @Autowired
     private UserService userService;
     @GetMapping("/all")
     public ResponseEntity<List<Usuario>> getAll(){

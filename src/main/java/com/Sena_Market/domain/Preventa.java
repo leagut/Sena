@@ -1,6 +1,5 @@
 package com.Sena_Market.domain;
 
-import com.Sena_Market.persistence.entity.Pedido;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,14 +7,16 @@ public class Preventa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private double price;
+    private int productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    private int productId;
-    private String name;
-    private double price;
+
+
 
     public Long getId() {
         return id;
