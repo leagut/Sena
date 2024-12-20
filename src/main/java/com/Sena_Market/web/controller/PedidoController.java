@@ -19,6 +19,11 @@ public class PedidoController {
 
     @PostMapping("/enviarCorreo")
     public void enviarPedido(@RequestBody Pedido pedido) {
+
+        for (Preventa preventa : pedido.getPreventas()) {
+            preventa.setPedido(pedido); // Asocia el Pedido a cada Preventa
+        }
+
         // Guardar el pedido en la base de datos
         pedidoRepository.save(pedido);
 
