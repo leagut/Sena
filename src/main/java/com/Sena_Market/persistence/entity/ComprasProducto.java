@@ -5,44 +5,28 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "compras_productos")
 public class ComprasProducto {
-    @EmbeddedId
-    private ComprasProductoPK id;
 
-    private Integer cantidad;
-    private Double total;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Boolean estado;
+    @Column(name = "precio") // Añadido: Precio del producto en esta compra
+    private Double precio;
 
     @ManyToOne
-    @MapsId("idCompra")
-    @JoinColumn(name = "id_compra", insertable = false, updatable = false)
+    @JoinColumn(name = "id_compra")
     private Compra compra;
 
     @ManyToOne
-    @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+    @JoinColumn(name = "id_producto")
     private Producto producto;
 
-    public ComprasProductoPK getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(ComprasProductoPK id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
     }
 
     public Boolean getEstado() {
@@ -51,6 +35,14 @@ public class ComprasProducto {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
     public Compra getCompra() {

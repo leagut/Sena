@@ -19,6 +19,14 @@ public class Compra {
     private String medioPago;
     private String comentario;
     private String estado;
+    @Column(name = "numero_factura", unique = true) // Añadido: Número de factura único
+    private String numeroFactura;
+    private String direccion;
+    private String telefono;
+    private Double total;
+
+
+
 
     @ManyToOne
     @JoinColumn(name = "id_cliente" , insertable = false , updatable = false)
@@ -26,6 +34,38 @@ public class Compra {
 
     @OneToMany(mappedBy = "compra" , cascade = {CascadeType.ALL} )
     private List<ComprasProducto> productos;
+
+    public String getNumeroFactura() {
+        return numeroFactura;
+    }
+
+    public void setNumeroFactura(String numeroFactura) {
+        this.numeroFactura = numeroFactura;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 
     public Integer getIdCompra() {
         return idCompra;
