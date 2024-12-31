@@ -45,6 +45,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/compraconfirm/efectivo").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/stock/ejecutar").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/productos/low-stock").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/stock/por-mes").permitAll();
 
                     http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();

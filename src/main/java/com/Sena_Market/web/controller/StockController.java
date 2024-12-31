@@ -1,16 +1,16 @@
 package com.Sena_Market.web.controller;
 
+import com.Sena_Market.domain.Service.StockService;
+import com.Sena_Market.domain.dto.VentasPorMesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/stock")
@@ -18,6 +18,11 @@ import java.sql.Connection;
 public class StockController {
     @Autowired
     private DataSource dataSource;
+
+
+    @Autowired
+    private StockService stockService;
+
 
     @PostMapping("/ejecutar")
     public ResponseEntity<String> ejecutarActualizarStock() {
@@ -31,4 +36,12 @@ public class StockController {
                     .body("Error al ejecutar el procedimiento almacenado.");
         }
     }
+
+    @GetMapping("/por-mes")
+    public List<VentasPorMesDTO> obtenerVentasPorMes() {
+        return stockService.obtenerVentasPorMes();
+    }
+
+
+
 }
