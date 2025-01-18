@@ -1,6 +1,7 @@
 package com.Sena_Market.security.config;
 
 
+import com.Sena_Market.cors.CustomCorsConfiguration;
 import com.Sena_Market.security.config.filter.JwtTokenValidator;
 import com.Sena_Market.security.service.UserDetailServiceImpl;
 import com.Sena_Market.security.util.JwtUtils;
@@ -21,6 +22,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -29,13 +35,19 @@ public class SecurityConfig {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    CustomCorsConfiguration customCorsConfiguration;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity ) throws Exception {
         return httpSecurity
+                .cors(c -> c.configurationSource(customCorsConfiguration))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
                     // EndPoints publicos
+
                     http.requestMatchers(HttpMethod.PUT, "/products/edit/**").permitAll();
                     http.requestMatchers(HttpMethod.PUT, "/products/edit/active/**").permitAll();
                     http.requestMatchers(HttpMethod.POST, "/products/save/**").permitAll();
@@ -46,6 +58,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/stock/ejecutar").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/productos/low-stock").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/stock/por-mes").permitAll();
+
 
                     http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
@@ -62,11 +75,32 @@ public class SecurityConfig {
                     //http.requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll();
 
                      http.anyRequest().denyAll();
+
                     //http.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
+
     }
+
+
+
+/*
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .cors(cors -> cors.disable()) // Habilitar o deshabilitar CORS según sea necesario
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF si no es necesario
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Permitir solicitudes OPTIONS (preflight)
+                        .anyRequest().authenticated() // Requiere autenticación para otras rutas
+                );
+
+        return http.build();
+    }
+*/
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

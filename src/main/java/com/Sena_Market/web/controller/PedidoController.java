@@ -8,8 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = {
+        "https://angels-front.vercel.app",
+        "http://34.217.67.249:80",
+        "http://34.217.67.249",
+        "http://localhost:4200"
+}, allowCredentials = "true")
 @RequestMapping("/pedidos")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PedidoController {
     @Autowired
     private PedidoRepository pedidoRepository;

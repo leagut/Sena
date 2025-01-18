@@ -16,8 +16,8 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = {
         "https://angels-front.vercel.app",
-        "http://54.212.15.91:80",
-        "http://54.212.15.91",
+        "http://34.217.67.249:80",
+        "http://34.217.67.249",
         "http://localhost:4200"
 }, allowCredentials = "true")
 @RequestMapping("/products")
